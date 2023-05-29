@@ -45,11 +45,7 @@ import android.content.DialogInterface;
 
 public class NotificationsFragment extends Fragment {
 
-    private PlayerView playerView;
-    private ExoPlayer player;
-    List<String> audioList = new ArrayList<>();
-    FirebaseFirestore db;
-    CollectionReference collectionRef;
+
 
     private FragmentNotificationsBinding binding;
 
@@ -64,90 +60,15 @@ public class NotificationsFragment extends Fragment {
         final TextView textView = binding.textNotifications;
         notificationsViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
 
-        db = FirebaseFirestore.getInstance();
-        collectionRef = db.collection("audio");
-
-        playerView= root.findViewById(R.id.audioplay);
-        player = new ExoPlayer.Builder(getContext()).build();
-
-        playerView.setPlayer(player);
-
-        collectionRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    for (DocumentSnapshot document : task.getResult()) {
-                        // Add each document to the list
-                        String data = document.getString("link");
-                        audioList.add(data);
-                    }
-
-                    ConcatenatingMediaSource mediaSource = new ConcatenatingMediaSource();
-                    for (String uri : audioList) {
-                        MediaItem mediaItem = MediaItem.fromUri(uri);
-                        MediaSource source = new ProgressiveMediaSource.Factory(new DefaultDataSource.Factory(getContext())).createMediaSource(mediaItem);
-                        mediaSource.addMediaSource(source);
-                        player.setMediaItem(mediaItem);
-                        player.prepare();
-                        player.play();
-                    }
-
-                    player.setMediaSource(mediaSource);
-                    player.prepare();
-
-                    player.addListener(new Player.Listener() {
-                        @Override
-                        public void onPlaybackStateChanged(int playbackState) {
-                            if (playbackState == Player.STATE_ENDED) {
-                                showNextAudioDialog();
-                            }
-                        }
-                    });
-                } else {
-                    // Handle the error if the task fails
-                    Log.d("Firestore", "Error getting documents: " + task.getException());
-                }
-            }
-
-        });
 
         return root;
     }
 
-    public void showNextAudioDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        builder.setTitle("Play Next Audio")
-                .setMessage("Do you want to play the next audio?")
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        playNextAudio();
-                    }
-                })
-                .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        // Handle the user's choice if they don't want to play the next audio
-                    }
-                })
-                .setCancelable(false)
-                .show();
-    }
 
-    private void playNextAudio() {
-        int nextIndex = player.getCurrentMediaItemIndex() + 1;
-        if (nextIndex < audioList.size()) {
-            player.seekTo(nextIndex, C.TIME_UNSET);
-            player.setPlayWhenReady(true);
-        } else {
-            // All audios have been played
-        }
-    }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        player.release();
         binding = null;
     }
 }
