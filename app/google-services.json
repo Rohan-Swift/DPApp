@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "182426050641",
+    "project_id": "dpapp-19049",
+    "storage_bucket": "dpapp-19049.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:182426050641:android:d14de121c8b304d5351870",
+        "android_client_info": {
+          "package_name": "com.example.dpapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA2BF9gyJlwJGn7yJiOesvrJP5F6ajqefY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
