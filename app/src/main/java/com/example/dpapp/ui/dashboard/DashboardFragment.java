@@ -38,7 +38,7 @@ public class DashboardFragment extends Fragment {
 
     private PlayerView playerView;
     private ExoPlayer player;
-    List<String> audioList = new ArrayList<>();
+    ArrayList<String> audioList = new ArrayList<>();
     FirebaseFirestore db;
     CollectionReference collectionRef;
 
