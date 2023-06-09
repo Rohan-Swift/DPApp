@@ -3,7 +3,9 @@ package com.example.dpapp;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,7 +30,7 @@ public class DocHomePage extends AppCompatActivity {
     FirebaseUser user;
     String uname;
     ListView listView;
-
+    Button signout;
     MyAdapter adapter;
 
     @Override
@@ -41,6 +43,7 @@ public class DocHomePage extends AppCompatActivity {
         mAuth= FirebaseAuth.getInstance();
         db=FirebaseFirestore.getInstance();
         listView= findViewById(R.id.listView);
+        signout= findViewById(R.id.signOutBtn);
 
         user= mAuth.getCurrentUser();
 
@@ -63,6 +66,13 @@ public class DocHomePage extends AppCompatActivity {
                 }
                 adapter.notifyDataSetChanged();
             }
+        });
+
+        signout.setOnClickListener(view -> {
+            mAuth.signOut();
+            Intent i = new Intent(DocHomePage.this, MainActivity.class);
+            startActivity(i);
+            finish();
         });
 
     }

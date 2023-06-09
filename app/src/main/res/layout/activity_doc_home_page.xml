@@ -37,4 +37,14 @@
         app:layout_constraintEnd_toEndOf="@+id/docName"
         app:layout_constraintStart_toStartOf="@+id/docName"
         app:layout_constraintTop_toBottomOf="@+id/docName" />
+
+    <Button
+        android:id="@+id/signOutBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
+        android:text="Signout"
+        app:layout_constraintEnd_toEndOf="@+id/listView"
+        app:layout_constraintStart_toStartOf="@+id/listView"
+        app:layout_constraintTop_toBottomOf="@+id/listView" />
 </androidx.constraintlayout.widget.ConstraintLayout>

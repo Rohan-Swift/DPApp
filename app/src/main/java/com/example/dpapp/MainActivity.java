@@ -70,25 +70,27 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(MainActivity.this, "Enter email", Toast.LENGTH_SHORT).show();
                     userName.requestFocus();
                 }
-                if(Passwd.isEmpty())
+                else if(Passwd.isEmpty())
                 {
                     Toast.makeText(MainActivity.this, "Enter Password of atleast 6 characters", Toast.LENGTH_SHORT).show();
                     Password.requestFocus();
                 }
 
-                mAuth.signInWithEmailAndPassword(UName, Passwd).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(task.isSuccessful())
-                        {
-                            Intent i= new Intent(MainActivity.this, PatHomePage.class);
-                            startActivity(i);
+                else {
+                    mAuth.signInWithEmailAndPassword(UName, Passwd).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                Intent i = new Intent(MainActivity.this, HomePage.class);
+                                startActivity(i);
+                                finish();
+                            }
                         }
-                    }
-                });
+                    });
+                }
             }
 
-            else if(text.equals("Doctor"))
+            if(text.equals("Doctor"))
             {
                 UName= userName.getText().toString().trim();
                 Passwd= Password.getText().toString().trim();
@@ -97,22 +99,23 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(MainActivity.this, "Enter email", Toast.LENGTH_SHORT).show();
                     userName.requestFocus();
                 }
-                if(Passwd.isEmpty())
+                else if(Passwd.isEmpty())
                 {
                     Toast.makeText(MainActivity.this, "Enter Password of atleast 6 characters", Toast.LENGTH_SHORT).show();
                     Password.requestFocus();
                 }
 
-                mAuth.signInWithEmailAndPassword(UName, Passwd).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(task.isSuccessful())
-                        {
-                            Intent i = new Intent(MainActivity.this, DocHomePage.class);
-                            startActivity(i);
+                else {
+                    mAuth.signInWithEmailAndPassword(UName, Passwd).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                Intent i = new Intent(MainActivity.this, DocHomePage.class);
+                                startActivity(i);
+                            }
                         }
-                    }
-                });
+                    });
+                }
             }
         });
     }
